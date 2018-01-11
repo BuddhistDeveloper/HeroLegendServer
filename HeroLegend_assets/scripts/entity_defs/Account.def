@@ -1,0 +1,32 @@
+<root>
+	<Properties>
+		<AccountName>
+			<Type>				STRING								</Type>
+			<Persistent> 		true 								</Persistent>
+			<Flags>				BASE								</Flags>
+		</AccountName>
+	</Properties>
+
+	<ClientMethods>
+		<onChangeNameResult>
+			<Arg>				STRING								</Arg>
+		</onChangeNameResult>
+		<onReqAccountNameResult>
+			<Arg>				STRING								</Arg>
+		</onReqAccountNameResult>
+	</ClientMethods>
+
+	<BaseMethods>
+		<onChangeName>
+			<Exposed/>
+			<Arg>				STRING								</Arg>
+		</onChangeName>
+		<reqAccountName>
+			<Exposed/>
+		</reqAccountName>
+	</BaseMethods>
+
+	<CellMethods>
+	</CellMethods>
+
+</root>
