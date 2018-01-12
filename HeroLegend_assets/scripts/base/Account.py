@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import KBEngine
 from KBEDebug import *
+from ROLE_INFOS import TRoleInfos
+from ROLE_INFOS import TRoleInfosList
 
 class Account(KBEngine.Proxy):
 	def __init__(self):
@@ -38,14 +40,29 @@ class Account(KBEngine.Proxy):
 		"""
 		DEBUG_MSG("Account[%i].onClientDeath:" % self.id)
 		self.destroy()
+	def reqRoleList(self):
+		"""
+		请求角色列表
+		"""
+		self.client.onReqRolesListResule(this.roles)
+	def reqCreateRole(self,roleTmpl,name):
+		"""
+		请求创建角色
+		"""
+		"""
+		判断能不能创建了
+		"""
 
-	def onChangeName(self,newName):
-		INFO_MSG("onChangeName : %s" % (newName))
-		self.AccountName = newName
-		self.writeToDB()
-		self.client.onChangeNameResult(newName)
+	def reqRemoveRole(self,id):
+		"""
+		请求删除角色
+		"""
+		DEBUG_MSG("Account[%i].reqRemoveRole: %s" % (self.id, dbid))
+		found = 0
+		
+		if dbid in self.characters:
+			del self.characters[dbid]
+			found = dbid
 
-	def reqAccountName(self):
-		INFO_MSG("reqAccountName : %s" % (self.AccountName))
-		self.client.onReqAccountNameResult(self.AccountName)
+		self.client.onRemoveRoleResult(found)
 

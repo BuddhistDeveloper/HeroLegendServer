@@ -1,2 +1,27 @@
 <root>
+    <ROLE_INFOS>	FIXED_DICT
+		<implementedBy>ROLE_INFOS.role_info_inst</implementedBy>
+		<Properties>
+			<dbid>
+				<Type>	DBID	</Type>
+			</dbid>
+			<name>
+				<Type>	STRING	</Type>
+			</name>
+			<roleTmpl>
+				<Type>	UINT32	</Type>
+			</roleTmpl>
+			<level>
+				<Type>	UINT32	</Type>
+			</level>
+		</Properties>
+	</ROLE_INFOS>
+    <ROLE_INFOS_LIST>	FIXED_DICT
+		<implementedBy>ROLE_INFOS.role_info_list_inst</implementedBy>
+		<Properties>
+			<values>
+				<Type>	ARRAY <of> ROLE_INFOS </of>	</Type>
+			</values>
+		</Properties>
+	</ROLE_INFOS_LIST>	
 </root>

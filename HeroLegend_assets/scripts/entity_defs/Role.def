@@ -1,0 +1,55 @@
+<root>
+    // 易变属性同步控制
+	<Volatile>
+		// 这样设置则总是同步到客户端
+		<position/>
+		
+		// 没有显式的设置则总是同步到客户端
+		<!-- <yaw/> -->
+
+		// 设置为0则不同步到客户端
+		<pitch> 0 </pitch>
+		
+		// 距离10米及以内同步到客户端
+		<roll> 10 </roll>
+
+		// 如果为true，在一些行为(如：navigate)导致服务器能确定实体在地面时，服务器不同步实体的Y轴坐标。
+		// 当同步大量实体时能节省大量带宽。
+		<optimized> true </optimized>
+	</Volatile>
+
+	// 注册接口def，类似于C#中的接口
+	// 这个标签只在Entity.def中有效，如果本身就是一个接口def则该标签被忽略
+	<Interfaces>
+		// 所有的接口def必须写在entity_defs/interfaces中
+		<Interface>	GameObject		</Interface>
+	</Interfaces>
+
+	<Properties>
+        <name>
+            <Type>          STRING                  </Type>
+            <Flags>         BASE                    </Flags>
+            <Persistent>	true				    </Persistent>
+        </name>
+        <level>
+            <Type>          UINT32                  </Type>
+            <Flags>         CELL_PUBLIC_AND_OWN     </Flags>
+            <Persistent>	true				    </Persistent>
+        </level>
+        <roleTmpl>
+            <Type>          UINT32                  </Type>
+            <Flags>         BASE                    </Flags>
+            <Persistent>	true				    </Persistent>
+        </roleTmpl>
+	</Properties>
+
+	<ClientMethods>
+	</ClientMethods>
+
+	<BaseMethods>
+	</BaseMethods>
+
+	<CellMethods>
+	</CellMethods>
+
+</root>

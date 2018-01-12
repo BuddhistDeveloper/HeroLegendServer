@@ -1,29 +1,53 @@
 <root>
 	<Properties>
-		<AccountName>
-			<Type>				STRING								</Type>
-			<Persistent> 		true 								</Persistent>
-			<Flags>				BASE								</Flags>
-		</AccountName>
+		<roles>
+			<Type>          ROLE_INFOS_LIST				</Type>
+			<Flags>			BASE						</Flags>
+			<Default>									</Default>
+			<Persistent>	true						</Persistent>
+		</roles>
 	</Properties>
 
 	<ClientMethods>
-		<onChangeNameResult>
-			<Arg>				STRING								</Arg>
-		</onChangeNameResult>
-		<onReqAccountNameResult>
-			<Arg>				STRING								</Arg>
-		</onReqAccountNameResult>
+		<!-- 				请求角色列表请求			   -->
+		<onReqRolesListResule>
+			<Arg>			ROLE_INFOS_LIST				</Arg>
+		</onReqRolesListResule>
+		<!-- 				创建角色					 -->
+		<onCreateRoleResult>
+			<Arg>			ROLE_INFOS					</Arg>
+		</onCreateRoleResult>
+		<!-- 				删除角色					 -->
+		<onRemoveRoleResult>
+			<Arg>			DBID						</Arg>
+		</onRemoveRoleResult>
 	</ClientMethods>
 
 	<BaseMethods>
-		<onChangeName>
+		<!-- 				请求角色列表请求			   -->
+		<reqRoleList>
 			<Exposed/>
-			<Arg>				STRING								</Arg>
-		</onChangeName>
-		<reqAccountName>
+			<Arg>			UINT32						</Arg>	<!--		retCode			-->
+		</reqRoleList>
+		<!-- 				创建角色					 -->
+		<reqCreateRole>
 			<Exposed/>
-		</reqAccountName>
+			<Arg>			UINT32						</Arg>	<!--		retCode			-->
+			<Arg>			UINT32						</Arg>	<!--		roleTmpl		-->
+			<Arg>			STRING						</Arg>	<!--		name			-->
+		</reqCreateRole>
+		<!-- 				删除角色					 -->
+		<reqRemoveRole>
+			<Exposed/>
+			<Arg>			UINT32						</Arg>	<!--		retCode			-->
+			<Arg>			DBID						</Arg>	<!--		dbid		-->
+		</reqRemoveRole>
+		<!-- 				选择游戏进行游戏			  -->
+		<reqSelectRole>
+			<Exposed/>
+			<Arg>			UINT32						</Arg>	<!--		retCode			-->
+			<Arg>			DBID						</Arg>	<!--		dbid		-->
+		</reqSelectRole>
 	</BaseMethods>
 
 	<CellMethods>
