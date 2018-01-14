@@ -1,4 +1,5 @@
 <root>
+<DBID>				UINT64		</DBID>
     <ROLE_INFOS>	FIXED_DICT
 		<implementedBy>ROLE_INFOS.role_info_inst</implementedBy>
 		<Properties>

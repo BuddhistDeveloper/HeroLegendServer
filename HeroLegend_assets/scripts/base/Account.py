@@ -3,10 +3,13 @@ import KBEngine
 from KBEDebug import *
 from ROLE_INFOS import TRoleInfos
 from ROLE_INFOS import TRoleInfosList
+from Config import Config
+from ErrCode import ErrCode
 
 class Account(KBEngine.Proxy):
 	def __init__(self):
 		KBEngine.Proxy.__init__(self)
+		self.activeRole = None
 		
 	def onTimer(self, id, userArg):
 		"""
@@ -43,8 +46,9 @@ class Account(KBEngine.Proxy):
 	def reqRoleList(self):
 		"""
 		请求角色列表
+
 		"""
-		self.client.onReqRolesListResule(this.roles)
+		self.client.onReqRolesListResule(self.roles)
 	def reqCreateRole(self,roleTmpl,name):
 		"""
 		请求创建角色
@@ -52,6 +56,21 @@ class Account(KBEngine.Proxy):
 		"""
 		判断能不能创建了
 		"""
+		roleinfo = TRoleInfos()
+		roleinfo.extend([0,'',0,0])
+		if(len(self.roles)) >= Config.getCommonConfig('RoleCount'):
+			self.client.onCreateRoleResult(ErrCode.ACCOUNT_ROLE_TOO_MUCH,roleinfo)
+			return
+		# spaceUType = GlobalConst.g_demoMaps.get(self.getClientDatas()[0], 1)
+
+		props = {
+			"name"				: name,
+			"level"				: 1,
+			"roleTmpl"			: roleTmpl
+		}
+		role = KBEngine.createBaseLocally('Role',props)
+		if role:
+			role.writeToDB(self._onRoleSaved)
 
 	def reqRemoveRole(self,id):
 		"""
@@ -65,4 +84,43 @@ class Account(KBEngine.Proxy):
 			found = dbid
 
 		self.client.onRemoveRoleResult(found)
+	def reqSelectRole(self,id):
+		"""
+		选择一个角色进行游戏
+		"""
+		self.client.onReqRolesListResule(self.roles)
+
+	"""
+	私有函数
+	"""
+	def _onRoleSaved(self,success,role):
+		if self.isDestroyed:
+			if role:
+				role.destroy(True)
+			return
+
+		roleinfo = TRoleInfos()
+		roleinfo.extend([0,"",0,0])
+
+		retCode = 0
+		if success:
+			"""
+			??
+			"""
+			info = TRoleInfos()
+			info.extend([role.databaseID,role.name,role.roleTmpl,1])
+			self.roles[role.databaseID] = info
+			roleinfo[0] = role.databaseID
+			roleinfo[1] = role.name
+			roleinfo[2] = role.roleTmpl
+			roleinfo[3] = 1
+			self.writeToDB()
+		else:
+			retCode = ErrCode.ROLE_CREATE_FAILED
+		
+		roleinfo.destroy()
+		if self.client:
+			self.client.onCreateRoleResult(retCode,roleinfo)
+
+
 

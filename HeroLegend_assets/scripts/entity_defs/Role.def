@@ -22,7 +22,6 @@
 	// 这个标签只在Entity.def中有效，如果本身就是一个接口def则该标签被忽略
 	<Interfaces>
 		// 所有的接口def必须写在entity_defs/interfaces中
-		<Interface>	GameObject		</Interface>
 	</Interfaces>
 
 	<Properties>
