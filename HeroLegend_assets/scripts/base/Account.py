@@ -4,7 +4,7 @@ from KBEDebug import *
 from ROLE_INFOS import TRoleInfos
 from ROLE_INFOS import TRoleInfosList
 from Config import Config
-from ErrCode import ErrCode
+import ErrCode
 
 class Account(KBEngine.Proxy):
 	def __init__(self):
@@ -48,7 +48,7 @@ class Account(KBEngine.Proxy):
 		请求角色列表
 
 		"""
-		self.client.onReqRolesListResule(self.roles)
+		self.client.onReqRolesListResule(ErrCode.GC_OK, self.roles)
 	def reqCreateRole(self,roleTmpl,name):
 		"""
 		请求创建角色
@@ -83,7 +83,7 @@ class Account(KBEngine.Proxy):
 			del self.characters[dbid]
 			found = dbid
 
-		self.client.onRemoveRoleResult(found)
+		self.client.onRemoveRoleResult(ErrCode.GC_OK, found)
 	def reqSelectRole(self,id):
 		"""
 		选择一个角色进行游戏
@@ -102,7 +102,7 @@ class Account(KBEngine.Proxy):
 		roleinfo = TRoleInfos()
 		roleinfo.extend([0,"",0,0])
 
-		retCode = 0
+		retCode = ErrCode.GC_OK
 		if success:
 			"""
 			??
@@ -121,6 +121,12 @@ class Account(KBEngine.Proxy):
 		roleinfo.destroy()
 		if self.client:
 			self.client.onCreateRoleResult(retCode,roleinfo)
+
+	def _onRoleLoaded(self,baseRef, dbid, wasActive):
+		"""
+		选择角色进入游戏时被调用
+		"""
+		 
 
 
 
